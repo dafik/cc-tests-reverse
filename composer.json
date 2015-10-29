@@ -1,0 +1,37 @@
+{
+  "name": "dafik/cc-tests-reverse",
+  "description": "test reverse utilities",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Zbyszek Wieczorek",
+      "email": "zbyszek.wieczorek@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.2",
+    "dafik/cc-tests-utils": "dev-master",
+    "corneltek/class-template": "2.1.2",
+    "jcalderonzumba/mink-phantomjs-driver": "0.4.x-dev",
+    "behat/mink": "1.7.x-dev",
+    "dafik/testlib": "dev-master",
+    "jakoch/phantomjs-installer": "1.9.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "Dfi\\TestReverse\\": "src/"
+    }
+  },
+  "config": {
+    "bin-dir": "bin"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "PhantomInstaller\\Installer::installPhantomJS"
+    ],
+    "post-update-cmd": [
+      "PhantomInstaller\\Installer::installPhantomJS"
+    ]
+  }
+}

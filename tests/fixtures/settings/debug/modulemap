@@ -1,0 +1,42 @@
+{
+  "host": ":test/fixtures",
+  "dateGenerate": "2015-10-29 10:29:51",
+  "modules": [
+    {
+      "id": 2510,
+      "name": "\/",
+      "module": null,
+      "controller": null,
+      "action": null,
+      "inMenu": false,
+      "level": 0
+    },
+    {
+      "id": 780,
+      "name": "administrator",
+      "module": "administrator",
+      "controller": null,
+      "action": null,
+      "inMenu": true,
+      "level": 1
+    },
+    {
+      "id": 797,
+      "name": "Callrecords",
+      "module": "administrator",
+      "controller": "Callrecords",
+      "action": null,
+      "inMenu": true,
+      "level": 2
+    },
+    {
+      "id": 2097,
+      "name": "List",
+      "module": "administrator",
+      "controller": "Callrecords",
+      "action": "list",
+      "inMenu": false,
+      "level": 3
+    }
+  ]
+}

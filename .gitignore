@@ -1,0 +1,8 @@
+*.iml
+/composer.lock
+/bin
+/vendor
+/log/*
+/tmp/phantomjs/*
+/tmp/img/*
+.idea/
