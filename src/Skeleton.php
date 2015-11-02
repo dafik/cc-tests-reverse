@@ -1,10 +1,8 @@
 <?php
 namespace Dfi\TestReverse;
 
-
-use ClassTemplate\ClassFile;
 use CodeGen\Block;
-use CodeGen\ClassMethodWithComments;
+use CodeGen\ClassMethod;
 use CodeGen\Comment;
 use CodeGen\CommentBlock;
 use CodeGen\Expr\AssignExpr;
@@ -16,6 +14,7 @@ use CodeGen\Statement\AssignStatement;
 use CodeGen\Statement\IfElseStatement;
 use CodeGen\Statement\Statement;
 use CodeGen\Statement\TryCatchStatement;
+use CodeGen\UserClass;
 use CodeGen\Variable;
 use Dfi\TestReverse\HtmlElements\Button;
 use Dfi\TestReverse\HtmlElements\DataTable;
@@ -101,9 +100,7 @@ class Skeleton
 
                 if ($action) {
                     $pathAction = $pathController . DIRECTORY_SEPARATOR . $action . 'Test.php';
-                    if (!file_exists($pathAction)) {
-                        self::generateActionTest($config, $pathAction);
-                    }
+                    self::generateActionTest($config, $pathAction);
                 }
             }
         }
@@ -124,7 +121,7 @@ class Skeleton
         $action = ucfirst($config->action);
 
         $className = $module . '\\' . $controller . '\\' . $action . 'Test';
-        $class = new ClassFile($className);
+        $class = new UserClass($className);
         $class->extendClass('AbstractModuleTest');
         $class->useClass('lib\AbstractModuleTest');
         $class->useClass('TestLib\Mink');
@@ -137,9 +134,9 @@ class Skeleton
         $doc1->appendLine('This method is called before a test is executed.');
 
         //$setup = $class->addMethod('protected', 'setUp');
-        $setup = new ClassMethodWithComments('setUp');
+        $setup = new ClassMethod('setUp');
         $setup->setScope('protected');
-        $setup->setCommentBlock($doc1);
+        //$setup->setCommentBlock($doc1);
         $block = $setup->getBlock();
 
         $block->appendRenderable(
@@ -159,9 +156,9 @@ class Skeleton
         $doc2->appendLine('Tears down the fixture, for example, closes a network connection.');
         $doc2->appendLine('This method is called after a test is executed.');
 
-        $teardown = new ClassMethodWithComments('tearDown');
+        $teardown = new ClassMethod('tearDown');
         $teardown->setScope('protected');
-        $teardown->setCommentBlock($doc2);
+        //$teardown->setCommentBlock($doc2);
         $block = $teardown->getBlock();
         $block->appendLine(
             new Statement(
@@ -175,9 +172,9 @@ class Skeleton
         $doc3 = new CommentBlock();
         $doc3->appendLine('@covers ' . $config->module . '/' . $config->controller . '/' . $config->action);
 
-        $mainTest = new ClassMethodWithComments('test' . $action);
+        $mainTest = new ClassMethod('test' . $action);
         $mainTest->setScope('public');
-        $mainTest->setCommentBlock($doc3);
+        //$mainTest->setCommentBlock($doc3);
 
         $class->addMethodObject($mainTest);
 
@@ -196,7 +193,7 @@ class Skeleton
         }
 
 
-        $res = file_put_contents($pathAction, $class->render());
+        $res = file_put_contents($pathAction, $code = "<?php\n" . $class->render());
         if (!$res) {
             throw new ErrorException('cant write');
         }

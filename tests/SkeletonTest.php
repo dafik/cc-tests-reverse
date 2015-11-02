@@ -17,14 +17,22 @@ class SkeletonTest extends AbstractTest
         $mockClass = '\mock\Phantom';
         $file = 'tests/mock/Phantom.php';
 
+
         require_once $file;
         Skeleton\Reverse::setProviderClass($mockClass);
 
+        $file = 'tmp/gen/Administrator/Callrecords/ListTest.php';
+        if (file_exists($file)) {
+            unlink($file);
+        }
+        static::assertFileNotExists($file);
+
         Skeleton::generate();
 
-        // Remove the following lines when you implement this test.
-        static::markTestIncomplete(
-            'This test has not been implemented yet . '
-        );
+        static::assertFileExists($file);
+
+        static::assertFileEquals('tests/fixtures/code/listTest.fixture', $file);
+
+
     }
 }

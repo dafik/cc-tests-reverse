@@ -1,0 +1,29 @@
+<?php
+namespace Administrator\Callrecords;
+use lib\AbstractModuleTest;
+use TestLib\Mink;
+class ListTest
+    extends AbstractModuleTest
+{
+    public static $canBeOverWritten = true;
+    protected function setUp()
+    {
+        $this->module = 'administrator';
+        $this->controller = 'Callrecords';
+        $this->action = 'list';
+        parent::setUp();
+    }
+    protected function tearDown()
+    {
+        parent::tearDown();
+    }
+    public function testList()
+    {
+        
+        
+        // Remove the following lines when you implement this test.
+        static::markTestIncomplete('This test has not been implemented yet . ');
+        
+        
+    }
+}
