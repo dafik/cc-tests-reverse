@@ -123,7 +123,7 @@ class Skeleton
         $className = $module . '\\' . $controller . '\\' . $action . 'Test';
         $class = new UserClass($className);
         $class->extendClass('AbstractModuleTest');
-        $class->useClass('lib\AbstractModuleTest');
+        $class->useClass('integration\modules\AbstractModuleTest');
         $class->useClass('TestLib\Mink');
 
         $class->addStaticVar('canBeOverWritten', true);
@@ -223,7 +223,7 @@ class Skeleton
      * @param $config
      * @return bool
      */
-    private static function openInMenuBlock(Block $block, ClassFile $class, $config)
+    private static function openInMenuBlock(Block $block, UserClass $class, $config)
     {
         fwrite(STDOUT, 'processing: ' . $config->module . ':' . $config->controller . ':' . $config->action . "\n");
 
@@ -314,7 +314,7 @@ class Skeleton
         $tryBlock->appendLine('');
 
 
-        $throwBlock = $tryStmt->throwBlock;
+        $throwBlock = $tryStmt->catchBlock;
         $throwBlock->appendRenderable(
             new Statement(
                 new MethodCall(
