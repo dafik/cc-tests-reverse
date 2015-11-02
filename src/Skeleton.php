@@ -58,13 +58,13 @@ class Skeleton
         return $var;
     }
 
-    public static function generate()
+    public static function generate($overwrite = false)
     {
         self::$testLocation = ROOT . DIRECTORY_SEPARATOR . self::$testLocation;
 
         $config = Map::getConfig();
         foreach ($config->modules as $module) {
-            if (self::shouldGenerateModule($module)) {
+            if (self::shouldGenerateModule($module, $overwrite)) {
                 self::generateModuleTest($module);
             }
         }
@@ -201,9 +201,38 @@ class Skeleton
     }
 
     private static function shouldGenerateModule(/** @noinspection PhpUnusedParameterInspection */
-        $module)
+        $module, $overwrite)
     {
-        //TODO implement check;
+
+        if ($module->level == 3) {
+            $moduleName = $module->module;
+            $controllerName = $module->controller;
+            $actionName = $module->action;
+
+
+            if (self::isReserved($moduleName, $module)) {
+                $moduleName .= '_';
+            }
+            if (self::isReserved($controllerName, $module)) {
+                $controllerName .= '_';
+            }
+
+            $class = '\\' . ucfirst($moduleName) . '\\' . ucfirst($controllerName) . '\\' . ucfirst($actionName) . 'Test';
+
+            $path = self::$testLocation . str_replace('\\', '/', $class) . '.php';
+            if (file_exists($path)) {
+                if ($overwrite) {
+                    $refl = new \ReflectionClass($class);
+                    $can = $refl->getProperty('canBeOverWritten');
+                    if ($can) {
+                        return true;
+                    }
+                    return false;
+                } else {
+                    return false;
+                }
+            }
+        }
         return true;
     }
 
@@ -333,9 +362,9 @@ class Skeleton
                 $doc->appendLine('Datatable tests');
 
 
-                $dtTest = new ClassMethodWithComments('testDataTable' . ($key + 1));
+                $dtTest = new ClassMethod('testDataTable' . ($key + 1));
                 $dtTest->setScope('public');
-                $dtTest->setCommentBlock($doc);
+                //$dtTest->setCommentBlock($doc);
 
                 $block = $dtTest->getBlock();
 

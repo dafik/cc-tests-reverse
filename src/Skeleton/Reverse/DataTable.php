@@ -20,6 +20,7 @@ use Dfi\TestReverse\HtmlElements\DataTable\Header;
 use Dfi\TestReverse\HtmlElements\DataTable\Info;
 use Dfi\TestReverse\HtmlElements\DataTable\Length;
 use Dfi\TestReverse\HtmlElements\DataTable\Pager;
+use Dfi\TestReverse\HtmlElements\DataTable\ActionOption;
 use Dfi\TestReverse\HtmlElements\Inputs\Select;
 use Dfi\TestReverse\Skeleton\Elements;
 use Dfi\TestReverse\Skeleton\Reverse\ActionOption as ReverseActionOption;
